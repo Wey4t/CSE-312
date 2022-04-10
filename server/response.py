@@ -6,10 +6,7 @@ def generate_response(body:bytes, content_type:str = 'text/plain; charset=utf-8'
     response += b'\r\n\r\n'
     response += body
     return response
-def generate_101_response(accept_key):
-    response = b'HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: '
-    response += accept_key + b'\r\n\r\n'
-    return response
+
 def redirect(path):
     response = ('HTTP/1.1 302 Redirect\r\nContent-Length: 0\r\nLocation: %s\r\n\r\n' % path).encode()
     return response

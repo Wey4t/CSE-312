@@ -30,9 +30,8 @@ if __name__ == "__main__":
             self.path = path
     def test_func(request,handler):
         print('t21312est')
-
+    Router.add_route(Route('GET','/hello',test_func))
 
     r = Router()
-    r.add_route(Route('GET','/hello',test_func))
     request = Request('GET','/hello')
     r.handle_request(request,'')

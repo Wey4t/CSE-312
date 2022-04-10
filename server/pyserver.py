@@ -1,5 +1,6 @@
 import socketserver
-
+from request import *
+from router import *
 class MyTCPHandler(socketserver.BaseRequestHandler):
     """
     The request handler class for our server.
@@ -8,12 +9,16 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     override the handle() method to implement communication to the
     client.
     """
+    def __init__():
+        self.router = Router()
+
     def handle(self):
         # self.request is the TCP socket connected to the client
         self.data = self.request.recv(1024).strip()
         print("{} wrote:".format(self.client_address[0]))
         print(self.data)
-        # just send back the same data, but upper-cased
+        request = Request(self.data, self)
+
         self.request.sendall(self.data.upper())
 
 if __name__ == "__main__":

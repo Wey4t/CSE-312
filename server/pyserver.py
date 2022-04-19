@@ -1,7 +1,7 @@
 import socketserver
-from request import *
-from router import *
-
+from request import Request
+from router import Router
+from static_file_path import add_file_path
 class MyTCPHandler(socketserver.BaseRequestHandler):
     """
     The request handler class for our server.
@@ -11,13 +11,14 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     client.
     """
     router = Router()
-        
+    add_file_path()
     def handle(self):
         # self.request is the TCP socket connected to the client
         self.data = self.request.recv(1024).strip()
         if len(self.data) == 0:
             return 
         print("{} wrote:".format(self.client_address[0]))
+        
         request = Request(self.data, self)
         self.router.handle_request(request, self)
 if __name__ == "__main__":

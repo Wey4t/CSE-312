@@ -5,9 +5,8 @@ class Request:
         if(b'Content-Type: multipart/form-data' in http_request):
             [http_request,self.boundary] = buffer_form(http_request, handler)
         self.received_length = len(http_request)
-        [request_line, self.header, self.body] = parse_request(http_request)
+        [request_line, self.headers, self.body] = parse_request(http_request)
         [self.method, self.path, self.version] = request_line.decode().split(' ')
-
 ###################################
 #  buffer the remain request body.
 # 
@@ -25,13 +24,15 @@ def buffer_form(http_request, handler):
     return [http_request, boundary]
 def parse_request(data: bytes): #assume have data
     request_line = data[0: data.find(Request.new_line)] # http class
-    header = data[data.find(Request.new_line)+len(Request.new_line): data.find(Request.blank_line)+len(Request.blank_line)] # http class
-    index_before_content = data.find(Request.blank_line)+len(Request.blank_line)
     if data.find(Request.blank_line) == -1:
         body = b''
+        header = data[data.find(Request.new_line)+len(Request.new_line): ] # http class
     else:
+        index_before_content = data.find(Request.blank_line)+len(Request.blank_line)
         body = data[index_before_content : ]
-    return [request_line,header,body]
+        header = data[data.find(Request.new_line)+len(Request.new_line): data.find(Request.blank_line)+len(Request.blank_line)] # http class
+    headers = parseHeaders(header.decode())
+    return [request_line,headers,body]
 def get_length(header: bytes):
     index = header.find(b'Content-Length:')+len(b'Content-Length:')
     body = header[index : ]
@@ -44,3 +45,12 @@ def get_current_length(header:bytes):
     if index == -1:
         return len(Request.blank_line)
     return (len(header) - index -len(Request.blank_line))
+# parse the headers string and output a dictionary
+def parseHeaders(headers: str):
+    headers = headers.split("\r\n")
+    retVal = {}
+    for header in headers:
+        pair = header.split(":")
+        # remove the empty spaces in the key/value if any
+        retVal[pair[0].replace(" ", "")] = pair[1].replace(" ", "")
+    return retVal

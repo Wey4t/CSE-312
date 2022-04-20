@@ -2,6 +2,7 @@ import socketserver
 from request import Request
 from router import Router
 from static_file_path import add_file_path
+import websocket
 class MyTCPHandler(socketserver.BaseRequestHandler):
     """
     The request handler class for our server.
@@ -10,7 +11,11 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     override the handle() method to implement communication to the
     client.
     """
+
+    ws_users = {} # store username:handler object to identity the ws connections
+
     router = Router()
+    websocket.add_websocket_path(router)
     add_file_path()
     def handle(self):
         # self.request is the TCP socket connected to the client

@@ -5,13 +5,12 @@ import json
 import hashlib
 import base64
 import sys
-from paths import escape_html
-from server import myTCPHandler
+from pyserver import MyTCPHandler as myTCPHandler
 import random
 
 def add_websocket_path(router):
     router.add_route(Route("GET", "/websocket", connectWS))
-    router.add_route(Route("GET", "/chat-history", getChatHistory))
+    #router.add_route(Route("GET", "/chat-history", getChatHistory))
 
 
 def connectWS(request, handler):
@@ -117,7 +116,7 @@ def connectWS(request, handler):
 
         # insert the chat into the chat history database
         del dataDict["messageType"]
-        db.storeChat(dataDict)
+        # db.storeChat(dataDict)
 
         # broadcast the response frame to all the connected users
         for user_handler in myTCPHandler.ws_users.values():
@@ -177,7 +176,12 @@ def constructResponseFrameFromBytes(dataBytes):
     return response_frame
 
 
-def getChatHistory(request, handler):
-    chatdata = json.dumps(db.list_chats()).encode()
-    response = generate_response(chatdata, "application/json; charset=utf-8", "200 OK")
-    handler.request.sendall(response)
+# escape the html txt
+def escape_html(input):
+    return input.replace('&', "&amp;").replace('<', "&lt;").replace('>', "&gt;")
+
+
+# def getChatHistory(request, handler):
+#     chatdata = json.dumps(db.list_chats()).encode()
+#     response = generate_response(chatdata, "application/json; charset=utf-8", "200 OK")
+#     handler.request.sendall(response)

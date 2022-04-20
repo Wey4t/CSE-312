@@ -1,12 +1,10 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <link href="SignIn_style.css" rel="stylesheet" type="text/css"/>
+    <link href="staticFile/css/SignIn_style.css" rel="stylesheet" type="text/css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="script.js"> </script>
+    <script src="staticFile/js/script.js"> </script>
     <meta charset="UTF-8">
     <title>Serendipity</title>
 </head>
@@ -18,26 +16,28 @@
 <div class="signIn_Container">
 
 
-    <div class="divALLINPUT">
+    <form action="/signin" id="signin-form" method="post" enctype="multipart/form-data">
+        <div class="divALLINPUT">
 
-        <div class="divUserInput">
-            <label class="label_email_or_username">
-                 Email or Username
-                <input type="text" class="username_input" id="username" required >
-            </label>
-
+            <div class="divUserInput">
+                <label for="signin-form-comment" class="label_email_or_username">
+                     Email or Username
+                    <input type="text" name="username" class="username_input" id="username" required >
+                </label>
+    
+                </div>
+    
+                <div class="divPasswordInput">
+                    <label for="signin-form-comment" class="Lable_Password"> Password
+                        <input  type = "password" name="password" class="passwordInput" id="password" required ></label>
+                </div>
             </div>
-
-            <div class="divPasswordInput">
-                <label class="Lable_Password"> Password
-                    <input  type = "password" class="passwordInput" id="password" required ></label>
-            </div>
+    
+        <div class="divButton">
+            <button class="button_signIn" type="submit" value="SignIn">Sign In</button>
         </div>
-
-    <div class="divButton">
-        <button onclick="login()" class="button_signIn" type="submit" value="SignIn">Sign In</button>
-        <a  href="signUp.html" class="Label_Link_CreateAccount "> Create Account -></a>
-    </div>
+    </form>
+    <a  href="signUp.html" class="Label_Link_CreateAccount "> Create Account -></a>
 
 
 
@@ -45,4 +45,4 @@
 
 
 </body>
-</html>
+</html> 

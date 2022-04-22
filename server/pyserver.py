@@ -16,7 +16,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
 
     router = Router()
     websocket.add_websocket_path(router)
-    add_file_path()
+    add_file_path(router)
     def handle(self):
         # self.request is the TCP socket connected to the client
         self.data = self.request.recv(1024).strip()

@@ -5,7 +5,7 @@ import json
 import hashlib
 import base64
 import sys
-from pyserver import MyTCPHandler as myTCPHandler
+#from pyserver import MyTCPHandler as myTCPHandler
 import random
 
 def add_websocket_path(router):
@@ -32,7 +32,7 @@ def connectWS(request, handler):
     # for this hw, we assume FIN bit is always 1, RSVs are always 0,
     # opcode is either 0001(sending txt) or 1000(close connection), so first byte is either 129/136
     username = "User" + str(random.randint(0, 1000))
-    myTCPHandler.ws_users[username] = handler
+    handler.ws_users[username] = handler
 
     while True:
 
@@ -45,7 +45,7 @@ def connectWS(request, handler):
         if ws_data[0] == 136:
             # close connection, remove the user from the ws_users
             print("Connection Closed")
-            del myTCPHandler.ws_users[username]
+            del handler.ws_users[username]
             return
 
         if ws_data[0] != 129:
@@ -97,7 +97,7 @@ def connectWS(request, handler):
 
         # check the messagetype, forward to another user if type is not "chatMessage"
         if dataDict["messageType"] != "chatMessage":
-            for user_handler in myTCPHandler.ws_users.values():
+            for user_handler in handler.ws_users.values():
                 if user_handler != handler:
                     response_frame = constructResponseFrameFromBytes(processed_data)
                     user_handler.request.sendall(response_frame)
@@ -119,7 +119,7 @@ def connectWS(request, handler):
         # db.storeChat(dataDict)
 
         # broadcast the response frame to all the connected users
-        for user_handler in myTCPHandler.ws_users.values():
+        for user_handler in handler.ws_users.values():
             user_handler.request.sendall(response_frame)
 
         print("")

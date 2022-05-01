@@ -1,0 +1,92 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!--<link href="SignIn_style.css" rel="stylesheet" type="text/css"/>-->
+    <!----<link href="SignIn-form.css" rel="stylesheet"/>-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="/src/staticFile/css/user_status.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/src/staticFile/js/script.js"> </script>
+    <script src="/src/staticFile/js/chat.js"> </script>
+    <meta charset="utf-8">
+    <title>Serendipity</title>
+</head>
+
+<body onload="acitve_user()">
+    <div class="container">
+        <!-- Nav tabs -->
+        <div class="shadow p-3 mb-5 bg-body rounded ">
+            <div class="container-flud ">
+                <ul class="nav nav-tabs  bg-dark">
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="/src/template/profile_template.html"> 
+                        <img src="/src/staticFile/image/{{auth_user_image}}" class="rounded-circle" style="box-shadow: 0.5px 0.5px;border-radius: 50%;"   width="24" height="24">
+                        Profile
+                    </a>
+                </li>
+                <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" >chat</a>
+                </li>
+                <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="/src/template/">setting</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="/src/template/draw_borad_template.html">Draw borad</a>
+                </li>
+        </ul>
+    </div>
+      <!-- Tab panes -->
+            <div class="tab-content">
+            <div class="tab-pane  fade" id="home">...</div>
+            <div class="tab-pane  active" id="chat">
+            
+                <div class="row bg-dark" style="margin:0px;height:100vh;">
+                    <!--chat room-->
+                    <div class="row"></div>
+                    <div class="col-md-8">
+                        
+                    </div>
+                        
+                    <!--
+                      --user list
+                     -->
+                    <div class="col-md-2 mt-3" style="position: fixed;top: 100px;right: 100px;width: 400px;">
+                        <ul class="list-group">
+                            {{loop_online_user_start}}
+                            <li class="list-group-item d-flex justify-content-between align-items-start mt-1" id="{{id}}" style="border-radius: 10px;box-shadow: 1px 1px" onclick="select_user(this)">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="/src/staticFile/image/{{online_user_image}}" class="rounded-circle"  style="box-shadow: 0.5px 0.5px;border-radius: 50%;"   width="60" height="60">
+                                        <div class='status-circle'>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="col-md-1">
+                                        <span class="badge bg-danger" id = {{noti_online_user}} style="width: 10px ;height: 15px;border-radius:50%;" hidden><h1 hidden></h1></span>
+                                    </div>
+                                    <div class="col-md-1 offset-md-1">
+                                        <p class="fs-5 mt-2">{{online_users}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            {{loop_online_user_end}}
+                          </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane container fade" id="setting">...</div>
+            
+        </div>
+        </div>
+    </div>
+
+
+
+
+    
+
+</body>
+</html>

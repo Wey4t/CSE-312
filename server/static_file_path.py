@@ -25,10 +25,10 @@ def try_open_file(filename, handler, type, flag='rb'):
     fp = open(filename,flag)
     return generate_response(fp.read(), type)
 
-def add_file_path():
-    add_route(Route('GET','^/.*\.html$',sent_file))
-    add_route(Route('GET','^/.*\.css$',sent_file))
-    add_route(Route('GET','^/.*\.js$',sent_file))
-    add_route(Route('GET','^/.*\.png$',sent_file))
-    add_route(Route('GET','^/.*\.jpg$',sent_file))
-    add_route(Route('GET','^/$',home))
+def add_file_path(router):
+    router.add_route(Route('GET','^/.*\.html$',sent_file))
+    router.add_route(Route('GET','^/.*\.css$',sent_file))
+    router.add_route(Route('GET','^/.*\.js$',sent_file))
+    router.add_route(Route('GET','^/.*\.png$',sent_file))
+    router.add_route(Route('GET','^/.*\.jpg$',sent_file))
+    router.add_route(Route('GET','^/$',home))

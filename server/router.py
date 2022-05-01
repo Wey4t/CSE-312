@@ -4,7 +4,8 @@ def add_route(route):
     Router.routes.append(route)
 class Router:
     routes = []
-        
+    def add_route(self,route):
+        Router.routes.append(route)
     def handle_request(self, request, handler):
         for route in self.routes:
             if route.is_request_match(request):

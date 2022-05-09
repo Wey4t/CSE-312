@@ -7,6 +7,7 @@ class Request:
         self.received_length = len(http_request)
         [request_line, self.headers, self.body] = parse_request(http_request)
         [self.method, self.path, self.version] = request_line.decode().split(' ')
+        self.cookies = pareseCookie(self.headers)
 ###################################
 #  buffer the remain request body.
 # 
@@ -54,3 +55,12 @@ def parseHeaders(headers: str):
         # remove the empty spaces in the key/value if any
         retVal[pair[0].replace(" ", "")] = pair[1].replace(" ", "")
     return retVal
+def pareseCookie(headers):
+    ans = {}
+    if headers.get('Cookie') is not None:
+        cookies = headers['Cookie']
+        cookies = cookies.split(';')
+        for cookie in cookies:
+            cookie_pair = cookie.split('=')
+            ans[cookie_pair[0].strip()] = cookie_pair[1].strip()
+    return ans

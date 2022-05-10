@@ -20,7 +20,7 @@ def buffer_form(http_request, handler):
         cur_length += len(data)
         print('receiving:',cur_length, '/', length)        
         http_request += data
-    endboundary = http_request[http_request.strip(Request.new_line).rfind(Request.new_line)+len(Request.new_line): ]
+    endboundary = http_request[http_request.strip(Request.new_line).rfind(Request.new_line)+len(Request.new_line): ].strip(Request.new_line)
     boundary = endboundary[ : -2]
     return [http_request, boundary]
 def parse_request(data: bytes): #assume have data

@@ -24,6 +24,10 @@ def find(collection_name,query = {},func = nothing):
     collection = db[collection_name]
     all = collection.find_one(query)
     return all
+def find_all(collection_name,query = {},func = nothing):
+    collection = db[collection_name]
+    all = collection.find(query)
+    return list(all)
 
 def delete(collection_name,query,many = False):
     collection = db[collection_name]

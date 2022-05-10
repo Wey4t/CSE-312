@@ -12,11 +12,11 @@ AUTH_COOKIE = 'auth_tk'  # the name of authorized token
 def add_user_path(router):
     router.add_route(Route('POST', '/login', login_user))
     router.add_route(Route('POST', '/register', register_user))
-    
+
 def register_user(request, handler):
     parsed_form = Form(request, ["username", "password"])
-    username = parsed_form["username"]
-    password = parsed_form["password"]
+    username = parsed_form.table["username"]
+    password = parsed_form.table["password"]
     registration(username, password)
 
 def registration(username, password):
@@ -41,8 +41,8 @@ def registration(username, password):
 
 def login_user(request, handler):
     parsed_form = Form(request, ["username", "password"])
-    username = parsed_form["username"]
-    password = parsed_form["password"]
+    username = parsed_form.table["username"]
+    password = parsed_form.table["password"]
     query = find(USER, {'username':username})
     hashed = query['hash']
     if type(password) is not bytes:

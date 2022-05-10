@@ -5,33 +5,32 @@ import hashlib
 from router import add_route, Route
 from database import *
 from response import generate_response
-from form import Form
 TOKEN_LEN = 80
 AUTH_COOKIE = 'auth_tk'  # the name of authorized token
-
 def add_user_path(router):
-    router.add_route(Route('POST', '/login', login_user))
-    router.add_route(Route('POST', '/register', register_user))
-    
-def register_user(request, handler):
-    parsed_form = Form(request, ["username", "password"])
-    username = parsed_form["username"]
-    password = parsed_form["password"]
-    registration(username, password)
+    router.add_route(Route('POST','^/users',add_user))
+    router.add_route(Route('GET','^/users/[0-9a-z-A-Z]',login))
+    router.add_route(Route('GET','^/name',check_test))
+def add_user(request, handler):
+    josnstring = request.body.decode()
+    user_dict = json.loads(josnstring) 
+    registration(user_dict)
 
-def registration(username, password):
+def registration(dic):
+    password = dic['password']
     if type(password) is not bytes:
         password = password.encode()
     salt = bcrypt.gensalt()  # salt and hash are string in database
     hashed = bcrypt.hashpw(password, salt).decode()
     new_user = {
-        'username': username,
+        'username': dic['username'],
+        'email': dic['email'],
         'hash': hashed,
         'token': 'never log in',
         'salt': salt.decode()
     }
     new_user_profile = {
-        'username': username,
+        'username': dic['username'],
         'post': 'This user is lazzy, post nothing',
         'profile':'This user have not any profile',
         'profile_image':'default.png'
@@ -39,10 +38,11 @@ def registration(username, password):
     insert(new_user)
     insert(new_user_profile)
 
-def login_user(request, handler):
-    parsed_form = Form(request, ["username", "password"])
-    username = parsed_form["username"]
-    password = parsed_form["password"]
+def login(request, handler):
+    josnstring = request.body.decode()
+    user_dict = json.loads(josnstring) 
+    password = user_dict['password']
+    username = user_dict['username']
     query = find(USER, {'username':username})
     hashed = query['hash']
     if type(password) is not bytes:
@@ -58,7 +58,6 @@ def login_user(request, handler):
         handler.request.sendall(generate_response(b'You login',headers=headers))
     else:
         handler.request.sendall(generate_response(b'Your submission was rejected','text/plain','403 Forbidden'))
-
 def check_user(request):
     if request.cookies.get(AUTH_COOKIE) == None:
         return False
@@ -70,9 +69,10 @@ def check_user(request):
         return False
     else:
         return True
-
 def generate_auth_token():
     token = secrets.token_urlsafe(TOKEN_LEN)
     hash_token = hashlib.sha256(token.encode()).hexdigest()
     return [token, hash_token]
 
+def check_test(request,handler):
+    print(check_user(request))

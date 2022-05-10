@@ -1,11 +1,10 @@
 from router import Route
 from response import generate_response
-import database as db
+from database import *
 import json
 import hashlib
 import base64
 import sys
-#from pyserver import MyTCPHandler as myTCPHandler
 import random
 
 def add_websocket_path(router):
@@ -27,6 +26,20 @@ def connectWS(request, handler):
     response += "Sec-WebSocket-Accept: " 
     response = response.encode() + sha1Hash + ("\r\n\r\n").encode()
     handler.request.sendall(response)
+
+    # check authentication of the user
+    cookie_attributes = request.cookies
+    username = ""
+    token = ""
+    if "auth_tk" in cookie_attributes:
+        token = cookie_attributes["auth_tk"]
+        hashed_token = hashlib.sha256(token.encode()).hexdigest()
+        user = find(USER, {'token':hashed_token})
+        if user:
+            username = escape_html(user["username"])
+
+    if username == "":
+        return
 
     # listen for the websocket data until the client sever the connection
     # for this hw, we assume FIN bit is always 1, RSVs are always 0,
@@ -95,28 +108,9 @@ def connectWS(request, handler):
         processed_data = bytearray(processed_data)
         dataDict = json.loads(processed_data)
 
-        # check the messagetype, forward to another user if type is not "chatMessage"
-        if dataDict["messageType"] != "chatMessage":
-            for user_handler in handler.ws_users.values():
-                if user_handler != handler:
-                    response_frame = constructResponseFrameFromBytes(processed_data)
-                    user_handler.request.sendall(response_frame)
-                    print(dataDict)
-                    print(handler, " to ", user_handler)
-                    print("")
-            continue
-
-
-        dataDict["comment"] = escape_html(dataDict["comment"])
-        print("Comment len is: ", len(dataDict["comment"]))
-        dataDict["username"] = username
         #print(dataDict)
 
         response_frame = constructResponseFrame(dataDict)
-
-        # insert the chat into the chat history database
-        del dataDict["messageType"]
-        # db.storeChat(dataDict)
 
         # broadcast the response frame to all the connected users
         for user_handler in handler.ws_users.values():
@@ -179,9 +173,3 @@ def constructResponseFrameFromBytes(dataBytes):
 # escape the html txt
 def escape_html(input):
     return input.replace('&', "&amp;").replace('<', "&lt;").replace('>', "&gt;")
-
-
-# def getChatHistory(request, handler):
-#     chatdata = json.dumps(db.list_chats()).encode()
-#     response = generate_response(chatdata, "application/json; charset=utf-8", "200 OK")
-#     handler.request.sendall(response)

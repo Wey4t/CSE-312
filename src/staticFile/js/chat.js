@@ -1,5 +1,5 @@
 function select_user(user) {
-    window.location.href='/chat-history/'+user.id    
+    window.location.href='/chat/'+user.id    
 }
 function acitve_user() {
     let posistion = window.location.href.lastIndexOf('/')

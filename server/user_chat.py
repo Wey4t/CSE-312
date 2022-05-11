@@ -118,7 +118,7 @@ def construct_template_data(request):
                    'message' : message['message'],
                    'hidden_auth_user' : auth_hidden,
                    'time' : '',
-                   'auth_message' : message['message']
+                   'auth_message' : message['message'],
                }
         loop_data_messages.append(data)
     loop_dict = {
@@ -129,6 +129,8 @@ def construct_template_data(request):
     dict = {
             'auth_user_image' : auth_image,
             'chat_user_image' : chat_image,
+            'auth_user':auth_name,
+            'chat_user':name,
             'user' : name,
             'loop_data' : loop_data
         }

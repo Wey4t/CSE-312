@@ -46,29 +46,29 @@ def connectWS(request, handler):
     # opcode is either 0001(sending txt) or 1000(close connection), so first byte is either 129/136
     uniqueSession = username+"/"+str(handler)
     handler.ws_users[uniqueSession] = handler
-
+    print(handler.ws_users)
     while True:
 
         #print("-----------------------------------")
 
         ws_data = handler.request.recv(2)
-        print(ws_data)
-        print("Start receiving new message...")
+        #print(ws_data)
+        #print("Start receiving new message...")
 
         if ws_data[0] == 136:
             # close connection, remove the user from the ws_users
-            print("Connection Closed")
+            #print("Connection Closed")
             del handler.ws_users[uniqueSession]
             return
 
         if ws_data[0] != 129:
             continue
 
-        print("Prebits: ", ws_data[0])
+        #print("Prebits: ", ws_data[0])
         
         payload_len = ws_data[1] & 0b01111111
         extended_len = 0
-        print("Payload_len: " + str(payload_len))
+        #print("Payload_len: " + str(payload_len))
         masking_keys_idx = 0
 
         # buffer ws_data as needed
@@ -91,13 +91,13 @@ def connectWS(request, handler):
         while len(ws_data) < total_len:
             data = handler.request.recv(total_len - len(ws_data))
             ws_data += data
-            print("Receiving: ", len(ws_data), " / ", total_len)
+            #print("Receiving: ", len(ws_data), " / ", total_len)
 
 
         payload_start_idx = masking_keys_idx + 4
-        print("Extended_len: " + str(extended_len))
+        #print("Extended_len: " + str(extended_len))
         processed_data = []
-        print("Total data len is: ", len(ws_data))
+        #print("Total data len is: ", len(ws_data))
         # XORed the payload with the masking_keys
         for i in range(payload_start_idx, len(ws_data)):
             if masking_keys_idx == payload_start_idx:
@@ -119,7 +119,7 @@ def connectWS(request, handler):
         for user_handler in handler.ws_users.values():
             user_handler.request.sendall(response_frame)
 
-        print("")
+        #print("")
 
         sys.stdout.flush()
         sys.stderr.flush()
@@ -127,7 +127,7 @@ def connectWS(request, handler):
 
 def constructResponseFrame(dataDict):
     dataDict = json.dumps(dataDict).encode()
-    print("Response payload len: " + str(len(dataDict)))
+    #print("Response payload len: " + str(len(dataDict)))
     response_payload_len = len(dataDict)
     response_frame = bytearray()
     prebits = (129).to_bytes(1, "big")
@@ -150,7 +150,7 @@ def constructResponseFrame(dataDict):
 
 
 def constructResponseFrameFromBytes(dataBytes):
-    print("Response payload len(bytes): " + str(len(dataBytes)))
+    #print("Response payload len(bytes): " + str(len(dataBytes)))
     response_payload_len = len(dataBytes)
     response_frame = bytearray()
     prebits = (129).to_bytes(1, "big")
@@ -169,7 +169,7 @@ def constructResponseFrameFromBytes(dataBytes):
 
     response_frame += dataBytes
 
-    print("Response frame len(bytes): " + str(len(response_frame)))
+    #print("Response frame len(bytes): " + str(len(response_frame)))
     return response_frame
 
 

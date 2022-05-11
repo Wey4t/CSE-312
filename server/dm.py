@@ -7,7 +7,7 @@ from form import *
 from router import add_route, Route
 from database import *
 from response import generate_response, redirect
-
+from websocket import constructResponseFrame
 def add_dm_path(router):
     router.add_route(Route('POST','^/DM',add_dm))
 
@@ -19,6 +19,12 @@ def add_dm(request, handler):
     print(Form(request,names).table)
     print(form_data)
     insert(form_data)
-    handler.request.sendall(redirect('/src/template/chat_template.html'))
+    receiver = form_data['receiver']
+    for connection in handler.ws_users:
+        name,nop = connection.split('/')
+        if name == form_data['receiver']:
+            dict = {'type':'pong'}
+            handler.ws_users[connection].request.sendall(constructResponseFrame(dict))
+    handler.request.sendall(redirect('chat/'+receiver))
 
 

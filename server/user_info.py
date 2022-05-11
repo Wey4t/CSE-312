@@ -15,6 +15,18 @@ def add_user_path(router):
     router.add_route(Route('POST', '/logout', logout))
 
 def logout(request,handler):
+    if check_user(request):
+        hash_token = hashlib.sha256(token.encode()).hexdigest()
+        user_info = find(USER, {'token':hash_token})
+        username = user_info['username']
+        query = find(USER_STATUS, {'username':username})
+        if query is None:
+            handler.request.sendall(generate_response(b'Not such user','text/plain','404 Not Found'))
+        else:
+            if( query['status'] == 'online'):
+                update(USER_STATUS, {'username':username},{'status': 'offline'})
+    else:
+        handler.request.sendall(generate_response(b'Your submission was rejected','text/plain','403 Forbidden'))
 
 def register_user(request, handler):
     parsed_form = Form(request, ["username", "password"])
@@ -64,6 +76,12 @@ def login_user(request, handler):
         query = find(USER, {'username':username})
         headers = []
         headers.append(b'Set-Cookie: %s='%AUTH_COOKIE.encode() + token.encode() + b'; HttpOnly; Max-Age=3600')
+        query = find(USER_STATUS, {'username':username})
+        if query is None:
+            insert({'username':username,'status':'online'})
+        else:
+            if( query['status'] == 'online'):
+                update(USER_STATUS, {'username':username},{'status': 'online'})
         handler.request.sendall(generate_response(b'You login',headers=headers))
     else:
         handler.request.sendall(generate_response(b'Your submission was rejected','text/plain','403 Forbidden'))

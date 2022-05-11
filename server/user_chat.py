@@ -13,13 +13,26 @@ def add_chat_path(router):
     router.add_route(Route('GET','^/chat/[0-9a-zA-Z]{1,25}',chat))
     router.add_route(Route('GET','^/chat_default',chat_default))
 def chat_default(request,handler):
+    if not check_user(request):
+        handler.request.sendall(generate_response(b'Your submission was rejected','text/plain','403 Forbidden'))
+        return
+    token = request.cookies[AUTH_COOKIE]
+    hash_token = hashlib.sha256(token.encode()).hexdigest()
+    user_info = find(USER, {'token':hash_token})
+    user_profile = find(PROFILE, {'username':user_info['username']})
+    auth_name = user_info['username']
     #online_user = handler.ws_users
-    online_user = ['test1','test2','test3']
+    online_users = find_all(USER_STATUS, {'status':'online'})
+    users = []
     loop_online_user = []
+    for user in online_users:
+        if(user['username'] != auth_name):
+            users.append(user['username'])
     data = {
-        'auth_user_image': 'cat.jpg'
-        }
-    for key in online_user:
+            'auth_user_image': user_profile['profile_image']
+            }
+    print(users)
+    for key in users:
         if key is bytes:
             key = key.decode()
         user_query = find(PROFILE, {'username':key})

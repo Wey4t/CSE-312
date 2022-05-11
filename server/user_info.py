@@ -18,7 +18,7 @@ def register_user(request, handler):
     username = parsed_form.table["username"]
     password = parsed_form.table["password"]
     if registration(username.decode(), password):
-        handler.request.sendall(redirect('/src/SignIp.html'))
+        handler.request.sendall(redirect('/src/SignIn.html'))
 
 def registration(username, password):
     if username is bytes:

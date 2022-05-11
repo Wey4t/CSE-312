@@ -44,8 +44,8 @@ def connectWS(request, handler):
     # listen for the websocket data until the client sever the connection
     # for this hw, we assume FIN bit is always 1, RSVs are always 0,
     # opcode is either 0001(sending txt) or 1000(close connection), so first byte is either 129/136
-    username = "User" + str(random.randint(0, 1000))
-    handler.ws_users[username] = handler
+    uniqueSession = username+str(handler)
+    handler.ws_users[uniqueSession] = handler
 
     while True:
 
@@ -109,6 +109,9 @@ def connectWS(request, handler):
         dataDict = json.loads(processed_data)
 
         #print(dataDict)
+        dataType = dataDict["type"]
+        if dataType == "PlayerLocation":
+            dataDict["username"] = username
 
         response_frame = constructResponseFrame(dataDict)
 

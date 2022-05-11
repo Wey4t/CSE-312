@@ -3,6 +3,7 @@ class Request:
     blank_line = b'\r\n\r\n'
     def __init__(self, http_request, handler):
         if(b'Content-Type: multipart/form-data' in http_request):
+            print(http_request)
             [http_request,self.boundary] = buffer_form(http_request, handler)
         self.received_length = len(http_request)
         [request_line, self.headers, self.body] = parse_request(http_request)
@@ -16,7 +17,7 @@ def buffer_form(http_request, handler):
     length = get_form_length(http_request)
     cur_length = get_current_length(http_request)
     while cur_length < length:
-        data = handler.request.recv(1024)
+        data = handler.request.recv(8*1024)
         cur_length += len(data)
         print('receiving:',cur_length, '/', length)        
         http_request += data
@@ -34,9 +35,6 @@ def parse_request(data: bytes): #assume have data
         header = data[data.find(Request.new_line)+len(Request.new_line): data.find(Request.blank_line)+len(Request.blank_line)].strip(Request.new_line)
     headers = parseHeaders(header.decode())
     return [request_line,headers,body]
-def get_length(header: bytes):
-    index = header.find(b'Content-Length:')+len(b'Content-Length:')
-    body = header[index : ]
 def get_form_length(header:bytes):
     index = header.find(b'Content-Length:')+len(b'Content-Length:')
     body = header[index : ]
@@ -44,8 +42,8 @@ def get_form_length(header:bytes):
 def get_current_length(header:bytes):
     index = header.find(Request.blank_line)
     if index == -1:
-        return len(Request.blank_line)
-    return (len(header) - index -len(Request.blank_line))
+        return 0
+    return (len(header) - index)
 # parse the headers string and output a dictionary
 def parseHeaders(headers: str):
     headers = headers.split("\r\n")
@@ -64,3 +62,11 @@ def pareseCookie(headers):
             cookie_pair = cookie.split('=')
             ans[cookie_pair[0].strip()] = cookie_pair[1].strip()
     return ans
+
+if __name__ == "__main__":
+    print(len('POST /register HTTP/1.1\r\nHost: localhost:8080\r\nConnection: keep-alive\r\nContent-Length: 241\r\nCache-Control: max-age=0\r\nOrigin: http://localhost:8080\r\nUpgrade-Insecure-Request\
+              s: 1\r\nContent-Type: multipart/form-data; boundary=----WebKitFormBoundaryJAbCc5UdxPsydx6n\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)\
+              Chrome/79.0.3945.130 Safari/537.36\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\r\nSec-Fetch-Sit\
+              e: same-origin\r\nSec-Fetch-Mode: navigate\r\nReferer: http://localhost:8080/src/signUp.html\r\nAccept-Encoding: gzip, deflate, br\r\nAccept-Language: zh-CN,zh;q=0.9,en;q=0.8,fr;q=0.7,eo;\
+              q=0.6\r\nCookie: _ga=GA1.1.1931502246.1650480224\r\n\r\n------WebKitFormBoundaryJAbCc5UdxPsydx6n\r\nContent-Disposition: form-data; name="username"\r\n\r\naa2a\r\n------WebKitFormBoundary\
+              JAbCc5UdxPsydx6n\r\nContent-Disposition: form-data; name="password"\r\n\r\n123\r\n------WebKitFormBoundaryJAbCc5UdxPsydx6n--'))

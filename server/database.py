@@ -3,6 +3,7 @@ import json
 USER = "user_identity"
 MESSAGE = "message_history"
 PROFILE = "user_profile"
+USER_STATUS = "user_status"
 client = pymongo.MongoClient(port=27017)
 db=client["web_project"]
 collection_map = {}
@@ -10,6 +11,7 @@ def add_table(table_name, key):
     coll = db[table_name]
     key = tuple(sorted(key.keys()))
     collection_map[key]=coll
+add_table(USER_STATUS, {'username':'','status',''})
 add_table(USER, {'username':'','hash':'','token':'','salt':''})
 add_table(MESSAGE, {'sender':'','receiver':'','message':''})
 add_table(PROFILE, {'username':'','post':'','profile':'','profile_image':''})

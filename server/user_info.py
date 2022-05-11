@@ -12,6 +12,9 @@ AUTH_COOKIE = 'auth_tk'  # the name of authorized token
 def add_user_path(router):
     router.add_route(Route('POST', '/login', login_user))
     router.add_route(Route('POST', '/register', register_user))
+    router.add_route(Route('POST', '/logout', logout))
+
+def logout(request,handler):
 
 def register_user(request, handler):
     parsed_form = Form(request, ["username", "password"])

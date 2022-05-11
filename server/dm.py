@@ -7,7 +7,6 @@ from form import *
 from router import add_route, Route
 from database import *
 from response import generate_response, redirect
-from server.response import redirect
 
 def add_dm_path(router):
     router.add_route(Route('POST','^/DM',add_dm))

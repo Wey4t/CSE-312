@@ -11,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/src/staticFile/js/script.js"> </script>
     <script src="/src/staticFile/js/chat.js"> </script>
+    <script src="/src/staticFile/js/ws.js"></script>
     <meta charset="utf-8">
     <title>CSE312 Project</title>
 </head>
@@ -117,8 +118,8 @@
                                         <form action="/DM" id="dm-form" method="post" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-md-7 mt-1">
-                                                        <input type="text" name='sender' value="{{auth_user}}">
-                                                        <input type="text" name='receiver' value="{{auth_user}}">
+                                                        <input type="text" name='sender' value="{{auth_user}}" hidden>
+                                                        <input type="text" name='receiver' value="{{chat_user}}" hidden>
                                                         <textarea id="dm_content" style="border-radius: 10px;" name="message" cols="50" rows="3"></textarea>
                                                 </div>
                                                 

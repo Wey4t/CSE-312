@@ -16,6 +16,7 @@ def add_user_path(router):
 
 def logout(request,handler):
     if check_user(request):
+        token = request.cookies[AUTH_COOKIE]
         hash_token = hashlib.sha256(token.encode()).hexdigest()
         user_info = find(USER, {'token':hash_token})
         username = user_info['username']

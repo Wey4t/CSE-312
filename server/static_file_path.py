@@ -1,6 +1,7 @@
 import imp
 from router import add_route, Route
-from response import generate_response
+from response import generate_response,redirect
+from user_info import check_user
 import os
 
 def sent_file(request, handler):
@@ -19,7 +20,10 @@ def sent_file(request, handler):
     else:
         handler.request.sendall(generate_response(b'content was not found','text/plain','404 Not Found'))
 def home(request, handler):
-    handler.request.sendall(generate_response(b'hello'))
+    if check_user(request):
+        handler.request.sendall(redirect('/profile'))
+    else:
+        handler.request.sendall(redirect('/src/SignIn.html'))
 
 def try_open_file(filename, handler, type, flag='rb'):
     fp = open(filename,flag)

@@ -45,9 +45,11 @@ def registration(username, password):
 
 def login_user(request, handler):
     parsed_form = Form(request, ["username", "password"])
-    username = parsed_form.table["username"]
+    username = parsed_form.table["username"].decode
     password = parsed_form.table["password"]
     query = find(USER, {'username':username})
+    if query == None:
+        handler.request.sendall(generate_response(b'Your submission was rejected','text/plain','403 Forbidden'))
     hashed = query['hash']
     if type(password) is not bytes:
         password = password.encode()

@@ -2,6 +2,7 @@
 import socketserver
 from request import Request
 from router import Router
+from dm import add_dm_path
 from static_file_path import add_file_path
 from user_info import add_user_path
 from user_profile import add_profile_path
@@ -19,6 +20,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     ws_users = {} # store username:handler object to identity the ws connections
 
     router = Router()
+    add_dm_path(router)
     add_chat_path(router)
     add_user_path(router)
     add_profile_path(router)

@@ -5,6 +5,7 @@ from router import Router
 from static_file_path import add_file_path
 from user_info import add_user_path
 from user_profile import add_profile_path
+from user_chat import add_chat_path
 import websocket
 class MyTCPHandler(socketserver.BaseRequestHandler):
     """
@@ -18,13 +19,14 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     ws_users = {} # store username:handler object to identity the ws connections
 
     router = Router()
+    add_chat_path(router)
     add_user_path(router)
     add_profile_path(router)
     websocket.add_websocket_path(router)
     add_file_path(router)
     def handle(self):
         # self.request is the TCP socket connected to the client
-        self.data = self.request.recv(1024).strip()
+        self.data = self.request.recv(4*1024).strip()
         if len(self.data) == 0:
             return 
         print("{} wrote:".format(self.client_address[0]))

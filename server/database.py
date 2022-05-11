@@ -10,7 +10,7 @@ def add_table(table_name, key):
     coll = db[table_name]
     key = tuple(sorted(key.keys()))
     collection_map[key]=coll
-add_table(USER, {'username':'':'','hash':'','token':'','salt':''})
+add_table(USER, {'username':'','hash':'','token':'','salt':''})
 add_table(MESSAGE, {'sender':'','receiver':'','message':''})
 add_table(PROFILE, {'username':'','post':'','profile':'','profile_image':''})
 def nothing(x):

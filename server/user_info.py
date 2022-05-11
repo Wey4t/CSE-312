@@ -4,7 +4,7 @@ import secrets
 import hashlib
 from router import add_route, Route
 from database import *
-from response import generate_response
+from response import generate_response, redirect
 from form import Form
 TOKEN_LEN = 80
 AUTH_COOKIE = 'auth_tk'  # the name of authorized token
@@ -17,9 +17,12 @@ def register_user(request, handler):
     parsed_form = Form(request, ["username", "password"])
     username = parsed_form.table["username"]
     password = parsed_form.table["password"]
-    registration(username, password)
+    if registration(username, password):
+        handler.request.sendall(redirect('/src/signUp.html'))
 
 def registration(username, password):
+    if username is bytes:
+        username = username.decode()
     if type(password) is not bytes:
         password = password.encode()
     salt = bcrypt.gensalt()  # salt and hash are string in database
@@ -38,6 +41,7 @@ def registration(username, password):
     }
     insert(new_user)
     insert(new_user_profile)
+    return True
 
 def login_user(request, handler):
     parsed_form = Form(request, ["username", "password"])

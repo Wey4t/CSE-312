@@ -20,6 +20,7 @@ def chat_default(request,handler):
         return
     data = {}
     loop_dict = construct_online_user(request,data)
+    data['loop_data'] = []
     data['loop_data'].append(loop_dict)
     print(data)
     print(handler.ws_users)
@@ -39,9 +40,8 @@ def construct_online_user(request,data):
     for user in online_users:
         if(user['username'] != auth_name):
             users.append(user['username'])
-    data['auth_user_image']=user_profile['profile_image']
-    data['loop_data'] = []
-    print(users)
+    if data.get('auth_user_image') == None:
+        data['auth_user_image']=user_profile['profile_image']
     for key in users:
         if key is bytes:
             key = key.decode()

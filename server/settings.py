@@ -2,10 +2,14 @@ from form import Form
 from database import *
 from user_info import *
 from response import *
+from router import add_route, Route
+
+def add_settings_paths(router):
+    router.add_route(Route('POST', "/upload_pfp", upload_user_pfp))
 
 def upload_user_pfp(request, handler):
-    parsed_form = Form(request, ["pfp_upload"])
-    image_bytes = parsed_form.table["pfp_upload"]
+    parsed_form = Form(request, ["icon"])
+    image_bytes = parsed_form.table["icon"]
     last_pfp_id = find(PFP_ID)
     pfp_id = 0
     username = get_username(request)

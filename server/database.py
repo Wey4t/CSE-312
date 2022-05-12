@@ -16,7 +16,7 @@ def add_table(table_name, key):
     collection_map[key]=coll
 add_table(USER_STATUS, {'username':'','status':''})
 add_table(USER, {'username':'','hash':'','token':'','salt':''})
-add_table(MESSAGE, {'sender':'','receiver':'','message':''})
+add_table(MESSAGE, {'sender':'','receiver':'','message':'','message_status':''})
 add_table(PROFILE, {'username':'','post':'','profile':'','profile_image':''})
 add_table(PFP_ID, {"last_pfp_id": -1})
 def nothing(x):

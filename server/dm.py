@@ -16,8 +16,7 @@ def add_dm(request, handler):
     form_data = Form(request,names).table
     for key in form_data:
         form_data[key] =  form_data[key].decode()
-    print(Form(request,names).table)
-    print(form_data)
+    form_data.update({"message_status":"unread"})
     insert(form_data)
     receiver = form_data['receiver']
     for connection in handler.ws_users:

@@ -88,10 +88,12 @@ def login_user(request, handler):
         handler.request.sendall(generate_response(b'Your submission was rejected','text/plain','403 Forbidden'))
 
 def check_user(request):
-    if request.cookies.get(AUTH_COOKIE) == None:
+    token = request.cookies.get(AUTH_COOKIE)
+    if  token == None:
         return False
-    print(request.cookies[AUTH_COOKIE])
-    token = request.cookies[AUTH_COOKIE]
+    if '------' in token:
+        token = token.split('------')[0]
+    print(token)
     hash_token = hashlib.sha256(token.encode()).hexdigest()
     user = find(USER, {'token':hash_token})
     if user == None: #no such user

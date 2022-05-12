@@ -36,23 +36,35 @@ def construct_online_user(request,data):
     #online_user = handler.ws_users
     online_users = find_all(USER_STATUS, {'status':'online'})
     users = []
+    sender_dict = {}
     loop_online_user = []
+    unread_messages = find_all(MESSAGE, {'receiver':auth_name,'message_status':'unread'})
+    print('unreads',unread_messages)
+    if unread_messages is not None:
+        for unread_message in unread_messages:
+            sender_dict[unread_message['sender']] = '1'
     for user in online_users:
         if(user['username'] != auth_name):
             users.append(user['username'])
     if data.get('auth_user_image') == None:
         data['auth_user_image']=user_profile['profile_image']
+    print('test',sender_dict)
     for key in users:
         if key is bytes:
             key = key.decode()
         user_query = find(PROFILE, {'username':key})
+        hidden_noti = 'hidden'
+        if(sender_dict.get(key) is not None and sender_dict[key] == '1'):
+            hidden_noti = ''
+            print(key,hidden_noti)
         user_data = {
                    'online_user_image': user_query['profile_image'],
-                   'noti_online_user' : 'hidden',
+                   'noti_online_user' : hidden_noti,
                    'online_users': key,
                    'id' : key
                }
         loop_online_user.append(user_data)
+    print('ad',user_data)
     loop_dict = {
         'start_tag' : '{{loop_online_user_start}}',
         'end_tag' : '{{loop_online_user_end}}',

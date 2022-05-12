@@ -95,11 +95,11 @@
     </div>
     <script>
         $('#id_icon').change(function () {
-            let myFileObj = new FileReader();
+            let File_Obj = new FileReader();
             let fileObi = $(this)[0].files[0];
-            myFileObj.readAsDataURL(fileObi)
-            myFileObj.onload = function () {
-                $('#myImg').attr('src', myFileObj.result)
+            File_Obj.readAsDataURL(fileObi)
+            File_Obj.onload = function () {
+                $('#myImg').attr('src', File_Obj.result)
             }
         })
      

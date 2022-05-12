@@ -4,6 +4,7 @@ USER = "user_identity"
 MESSAGE = "message_history"
 PROFILE = "user_profile"
 USER_STATUS = "user_status"
+PFP_ID = "pfp_id"
 client = pymongo.MongoClient(port=27017)
 db=client["web_project"]
 collection_map = {}
@@ -15,6 +16,7 @@ add_table(USER_STATUS, {'username':'','status':''})
 add_table(USER, {'username':'','hash':'','token':'','salt':''})
 add_table(MESSAGE, {'sender':'','receiver':'','message':''})
 add_table(PROFILE, {'username':'','post':'','profile':'','profile_image':''})
+add_table(PFP_ID, {"last_pfp_id": -1})
 def nothing(x):
     pass
 

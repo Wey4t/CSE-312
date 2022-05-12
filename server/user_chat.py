@@ -92,6 +92,7 @@ def construct_template_data(request):
     auth_image = user_image['profile_image']
     messages1 = find_all(MESSAGE, {'sender':auth_name,'receiver':name})
     messages2 = find_all(MESSAGE, {'sender':name,'receiver':auth_name})
+    update(MESSAGE,{'sender':name},{'message_status':'read'},True)
     messages = []
     i=0
     j=0

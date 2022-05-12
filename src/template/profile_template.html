@@ -81,11 +81,14 @@
                     </div><hr>
                 </div>
                 <div class="row">
-                    <div class="col-md-1 offset-md-6"><p class="fs-5">Post</p></div>
-                    <div class="row">
                         <div class="offset-md-1">
-                            <p class="fs-5">{{time}}:{{content}}</p>
+                            <p class="fs-5">{{content}}</p>
                         </div>
+                        <form action="/profile_post" method="post" enctype="multipart/form-data">
+                            <label for="Authenticated Chat"><b>Description</b></label>
+                            <input type="text" placeholder="Enter Description" name="post" required>
+                            <input type="submit"value="Submit">
+                          </form>
                     </div>
                 </div>
             </div>

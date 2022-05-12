@@ -13,6 +13,22 @@ def add_user_path(router):
     router.add_route(Route('POST', '/login', login_user))
     router.add_route(Route('POST', '/register', register_user))
     router.add_route(Route('POST', '/logout', logout))
+    router.add_route(Route('POST','/profile_post',profile))
+
+def profile(request,handler):
+    names= ['post','profile']
+    form_data = Form(request,names).table
+    print(form_data)
+    for key in form_data:
+        form_data[key] =  form_data[key].decode()
+    token = request.cookies[AUTH_COOKIE]
+    hash_token = hashlib.sha256(token.encode()).hexdigest()
+    user_info = find(USER, {'token':hash_token})
+    auth_name = user_info['username']
+    update(PROFILE,{'username':auth_name},form_data)
+    update(PROFILE,{'username':auth_name},{'profile':''})
+
+    handler.request.sendall(redirect('/'))
 
 def logout(request,handler):
     if check_user(request):
@@ -52,7 +68,7 @@ def registration(username, password):
     new_user_profile = {
         'username': username,
         'post': 'This user is lazzy, post nothing',
-        'profile':'This user have not any profile',
+        'profile':'This user have not any description',
         'profile_image':'default.png'
     }
     insert(new_user)

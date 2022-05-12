@@ -3,13 +3,15 @@ from database import *
 from user_info import *
 from response import *
 from router import add_route, Route
+import sys
 
 def add_settings_paths(router):
-    router.add_route(Route('POST', "/upload_pfp", upload_user_pfp))
+    router.add_route(Route('POST', "/upload-pfp", upload_user_pfp))
 
 def upload_user_pfp(request, handler):
     parsed_form = Form(request, ["icon"])
     image_bytes = parsed_form.table["icon"]
+    print("image: ", image_bytes)
     last_pfp_id = find(PFP_ID)
     pfp_id = 0
     username = get_username(request)
@@ -23,14 +25,16 @@ def upload_user_pfp(request, handler):
     else:
         insert({"last_pfp_id": 0})
 
-    img_filename = "user_image" + pfp_id + ".jpg"
+    img_filename = "user_image" + str(pfp_id) + ".jpg"
 
     if image_bytes != b'':
-        with open("../src/staticFile/image/"+img_filename, "wb") as user_img:
+        with open("./src/staticFile/image/"+img_filename, "wb") as user_img:
             user_img.write(image_bytes)
     
     update(PROFILE, {"username":username}, {"profile_image":img_filename}, False)
-    handler.request.sendall(redirect("src/profile.html"))
+    handler.request.sendall(redirect("/profile"))
+    sys.stdout.flush()
+    sys.stderr.flush()
 
 
 def get_username(request):

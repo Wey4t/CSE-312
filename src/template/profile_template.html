@@ -57,10 +57,10 @@
             <div class="tab-pane container active" id="home">
                 <div class="row">
                     <div class="col-md-1">
-                        <form action='/upload_pfp' id="myForm" enctype="multipart/form-data" method="post">
+                        <form action='/upload-pfp' id="myForm" enctype="multipart/form-data" method="post">
                             <div>
                                 <label for="id_icon">
-                                    <img src="/src/staticFile/image/{{auth_user_image}}" class="rounded-icon"  width="80" height="80">
+                                    <img src="/src/staticFile/image/{{auth_user_image}}" class="rounded-icon"  width="80" height="80" id="myImg">
                                 </label>
                             </div>
                             <input type="file" id="id_icon" name="icon" style="display: none">

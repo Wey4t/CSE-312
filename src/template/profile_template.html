@@ -96,16 +96,10 @@
         </div>
     </div>
     <script>
-        // 头像预览
         $('#id_icon').change(function () {
-            // 1.文件阅读器对象
             let myFileObj = new FileReader();
-            // 2.获取用户上传的文件对象  $(this)[0].files[0]---jq里面无法对文件进行处理，需要转换成原生js
             let fileObi = $(this)[0].files[0];
-            // 3.将文件对象交给阅读器对象
-            myFileObj.readAsDataURL(fileObi) // 异步操作， IO操作
-            // 4.利用文件阅读器将文件展示到前端页面，修改是src属性
-            // 5. 等待文件阅读器加载完毕  myFileObj.result---图片路径
+            myFileObj.readAsDataURL(fileObi)
             myFileObj.onload = function () {
                 $('#myImg').attr('src', myFileObj.result)
             }

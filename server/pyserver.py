@@ -7,7 +7,9 @@ from static_file_path import add_file_path
 from user_info import add_user_path
 from user_profile import add_profile_path
 from user_chat import add_chat_path
+from settings import add_settings_paths
 import websocket
+import sys
 class MyTCPHandler(socketserver.BaseRequestHandler):
     """
     The request handler class for our server.
@@ -20,6 +22,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     ws_users = {} # store username:handler object to identity the ws connections
 
     router = Router()
+    add_settings_paths(router)
     add_dm_path(router)
     add_chat_path(router)
     add_user_path(router)
@@ -35,6 +38,8 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         
         request = Request(self.data, self)
         self.router.handle_request(request, self)
+        sys.stdout.flush()
+        sys.stderr.flush()
 if __name__ == "__main__":
     HOST, PORT = "0.0.0.0", 8080
 

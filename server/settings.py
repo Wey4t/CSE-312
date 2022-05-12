@@ -39,12 +39,17 @@ def upload_user_pfp(request, handler):
 
 def get_username(request):
     if check_user(request):
-        token = request.cookies[AUTH_COOKIE]
+        token = request.cookies.get(AUTH_COOKIE)
+        if  token == None:
+            return False
+        if '------' in token:
+            token = token.split('------')[0]
+        print(token)
+        print('token',token)
         hash_token = hashlib.sha256(token.encode()).hexdigest()
         user_info = find(USER, {'token':hash_token})
         username = user_info['username']
         return username
     return ""
-    
 
 

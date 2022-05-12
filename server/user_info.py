@@ -6,6 +6,7 @@ from router import add_route, Route
 from database import *
 from response import generate_response, redirect
 from form import Form
+from response import redirect_via_cookies
 TOKEN_LEN = 80
 AUTH_COOKIE = 'auth_tk'  # the name of authorized token
 
@@ -83,7 +84,7 @@ def login_user(request, handler):
         else:
             if( query['status'] == 'online'):
                 update(USER_STATUS, {'username':username},{'status': 'online'})
-        handler.request.sendall(generate_response(b'You login',headers=headers))
+        handler.request.sendall(redirect_via_cookies("/profile", headers))
     else:
         handler.request.sendall(generate_response(b'Your submission was rejected','text/plain','403 Forbidden'))
 

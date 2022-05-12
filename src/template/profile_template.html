@@ -12,6 +12,19 @@
     <meta charset="utf-8">
     <title>CSE312 Project</title>
 </head>
+
+<style>
+    .round_icon {
+        width: 66px;
+        height: 66px;
+        display: flex;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+</style>
+
 <body>
     <div class="container bg-white ">
     <!-- Nav tabs -->
@@ -44,7 +57,17 @@
             <div class="tab-pane container active" id="home">
                 <div class="row">
                     <div class="col-md-1">
-                        <img src="/src/staticFile/image/{{auth_user_image}}" class="rounded-circle"  width="80" height="80">
+                        <form id="myForm" enctype="multipart/form-data" method="post">
+                            <div>
+                                <label for="id_icon">
+                                    <!--提交的头像展示-->
+                                    <img src="" class="round_icon" alt="头像" id="myImg">
+                                </label>
+                            </div>
+                            <input type="file" id="id_icon" name="icon" style="display: none">
+                         
+                            <input type="submit" value="提交">
+                        </form>
                     </div>
                     <div class="col-md-1 ">
                         <div class="offset-md-6">
@@ -72,5 +95,22 @@
             </div>
         </div>
     </div>
+    <script>
+        // 头像预览
+        $('#id_icon').change(function () {
+            // 1.文件阅读器对象
+            let myFileObj = new FileReader();
+            // 2.获取用户上传的文件对象  $(this)[0].files[0]---jq里面无法对文件进行处理，需要转换成原生js
+            let fileObi = $(this)[0].files[0];
+            // 3.将文件对象交给阅读器对象
+            myFileObj.readAsDataURL(fileObi) // 异步操作， IO操作
+            // 4.利用文件阅读器将文件展示到前端页面，修改是src属性
+            // 5. 等待文件阅读器加载完毕  myFileObj.result---图片路径
+            myFileObj.onload = function () {
+                $('#myImg').attr('src', myFileObj.result)
+            }
+        })
+     
+    </script>
 
 </body>

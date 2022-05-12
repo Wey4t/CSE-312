@@ -36,7 +36,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         request = Request(self.data, self)
         self.router.handle_request(request, self)
 if __name__ == "__main__":
-    HOST, PORT = "localhost", 8080
+    HOST, PORT = "0.0.0.0", 8080
 
     # Create the server, binding to localhost on port 8080
     with socketserver.ThreadingTCPServer((HOST, PORT), MyTCPHandler) as server:

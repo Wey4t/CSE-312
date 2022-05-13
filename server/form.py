@@ -2,7 +2,6 @@ from request import *
 class Form:
     def __init__(self, request:Request, keys):
         self.table = {}
-        print(request.body)
         contents = request.body.split(request.boundary)[1:-1]
         pair = zip(contents, keys)
         for content in contents:
@@ -24,5 +23,5 @@ if __name__ == "__main__":
     request_2 = Request(test_case_2,'')
     form_1 = Form(request_1,names_1)
     form_2 = Form(request_2,name_2)
-    print (form_1.table)
-    print(form_2.table)
+    #print (form_1.table)
+    #print(form_2.table)

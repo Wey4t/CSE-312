@@ -1,13 +1,13 @@
-import pymongo
-#from pymongo import MongoClient
+#import pymongo
+from pymongo import MongoClient
 import json
 USER = "user_identity"
 MESSAGE = "message_history"
 PROFILE = "user_profile"
 USER_STATUS = "user_status"
 PFP_ID = "pfp_id"
-client = pymongo.MongoClient(port=27017)
-#client = MongoClient("mongo")
+#client = pymongo.MongoClient(port=27017)
+client = MongoClient("mongo")
 db=client["web_project"]
 collection_map = {}
 def add_table(table_name, key):

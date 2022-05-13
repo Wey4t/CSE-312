@@ -36,9 +36,9 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         self.data = self.request.recv(4*1024).strip()
         if len(self.data) == 0:
             return 
-        print("{} wrote:".format(self.client_address[0]))
-        
         request = Request(self.data, self)
+        print("{} wrote:request {}".format(self.client_address[0], request.path))
+        
         self.router.handle_request(request, self)
         sys.stdout.flush()
         sys.stderr.flush()

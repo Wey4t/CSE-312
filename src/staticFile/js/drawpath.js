@@ -51,9 +51,11 @@ socket.onmessage = function (ws_message) {
             x = message.x
             y = message.y
             show_others_draw(x, y);
+            break;
         case 'pong':
             var a = document.getElementById('noti')
             a.hidden = false
+            break;
     }
 }
 function start() {

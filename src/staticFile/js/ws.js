@@ -13,3 +13,14 @@ socket.onmessage = function (ws_message) {
         a.hidden = false
     }
 }
+ socket.onmessage = function (ws_message) {
+     const message = JSON.parse(ws_message.data);
+     const messageType = message.type
+     if (messageType === 'chat_pong'){
+         const sender = message.sender
+         console.log(sender)
+         var a = document.getElementById('ws'+sender)
+         a.hidden = false
+
+     }
+ }

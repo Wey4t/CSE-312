@@ -62,7 +62,7 @@ def construct_online_user(request,data):
                    'online_user_image': user_query['profile_image'],
                    'noti_online_user' : hidden_noti,
                    'online_users': key,
-                   'noti_id':key,
+                   'noti_id':'ws'+key,
                    'id' : key
                }
         loop_online_user.append(user_data)

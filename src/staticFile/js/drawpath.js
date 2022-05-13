@@ -21,7 +21,7 @@ function draw(event) {
     ctx.beginPath();
     ctx.lineWidth = 5;
     ctx.lineCap = 'round';
-    ctx.strokeStyle = '#ACD3ED';
+    ctx.strokeStyle = '#000000';
     ctx.moveTo(x, y);
     ctx.lineTo(x, y);
     ctx.stroke();
@@ -34,7 +34,7 @@ function show_others_draw(x, y) {
     ctx.beginPath();
     ctx.lineWidth = 5;
     ctx.lineCap = 'round';
-    ctx.strokeStyle = '#ACD3ED';
+    ctx.strokeStyle = '#000000';
     ctx.moveTo(x, y);
     ctx.lineTo(x, y);
     ctx.stroke();

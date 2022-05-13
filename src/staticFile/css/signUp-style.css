@@ -11,9 +11,9 @@
 
   position: absolute;
   width: 380px;
-  height: 624px;
-  left: 70%;
-  top: 13%;
+  height: 400px;
+  left: 40%;
+  top: 28%;
 
   background: #FFFFFF;
   /* Grey / T4 */
@@ -32,7 +32,7 @@
   width: 300px;
   height: 48px;
   left: 10.5%;
-  top: 80%;
+  top: 65%;
 
   /* Inside auto layout */
   flex: none;
@@ -337,8 +337,9 @@
 .button_back{
   position: absolute;
   height: 7%;
-  margin: 140% -10%;
+  margin: 90% -6%;
   width:15%;
+  top:0%;
   border:none;
   transition-duration: 0.4s;
   cursor: pointer;

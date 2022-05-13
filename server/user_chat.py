@@ -26,6 +26,7 @@ def chat_default(request,handler):
     print(handler.ws_users)
     view = make_template(CHAT_TEMPLATE_DEFAULT_PATH,data)
     handler.request.sendall(generate_response(view.encode('utf-8'),'text/html; charset=utf-8'))
+    
 
 def construct_online_user(request,data):
     token = request.cookies[AUTH_COOKIE]
@@ -61,6 +62,7 @@ def construct_online_user(request,data):
                    'online_user_image': user_query['profile_image'],
                    'noti_online_user' : hidden_noti,
                    'online_users': key,
+                   'noti_id':key,
                    'id' : key
                }
         loop_online_user.append(user_data)

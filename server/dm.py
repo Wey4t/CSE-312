@@ -24,7 +24,7 @@ def add_dm(request, handler):
         if name == form_data['receiver']:
             dict = {'type':'pong'}
             handler.ws_users[connection].request.sendall(constructResponseFrame(dict))
-            dict = {'type':'chat_pong', 'sender', form_data['sender']}
+            dict = {'type':'chat_pong', 'sender': form_data['senderg']}
             handler.ws_users[connection].request.sendall(constructResponseFrame(dict))
     handler.request.sendall(redirect('chat/'+receiver))
 

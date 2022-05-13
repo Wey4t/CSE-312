@@ -13,5 +13,5 @@ def render_drawboard(request, handler):
         handler.request.sendall(generate_response(b'Your submission was rejected','text/plain','403 Forbidden'))
         return
     user_pfp = find(PROFILE, {"username":username})["profile_image"]
-    drawboard_page = make_template("./src/template/draw_borad_template.html", {"auth_user_image":user_pfp})
+    drawboard_page = make_template("./src/template/draw_borad_template.html", {"auth_user_image":user_pfp, "noti":"hidden"})
     handler.request.sendall(generate_response(drawboard_page.encode(), 'text/html; charset=utf-8'))

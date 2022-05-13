@@ -64,7 +64,6 @@ def construct_online_user(request,data):
                    'id' : key
                }
         loop_online_user.append(user_data)
-    print('ad',user_data)
     loop_dict = {
         'start_tag' : '{{loop_online_user_start}}',
         'end_tag' : '{{loop_online_user_end}}',

@@ -1,4 +1,3 @@
-import requests
 class Request:
     new_line = b'\r\n'
     blank_line = b'\r\n\r\n'

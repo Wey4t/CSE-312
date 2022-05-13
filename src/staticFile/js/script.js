@@ -11,3 +11,7 @@ function login() {
         pass
     }
 }
+
+function register(){
+    window.location.href = "src/SignIn.html"
+}

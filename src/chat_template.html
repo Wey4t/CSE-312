@@ -1,0 +1,171 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!--<link href="SignIn_style.css" rel="stylesheet" type="text/css"/>-->
+    <!----<link href="SignIn-form.css" rel="stylesheet"/>-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="/src/staticFile/css/user_status.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./staticFile/js/script.js"> </script>
+    <script src="./staticFile/js/chat.js"> </script>
+    <meta charset="utf-8">
+    <title>CSE312 Project</title>
+</head>
+
+<body >
+    <div class="container">
+        <!-- Nav tabs -->
+        <div class="shadow p-3 mb-5 bg-dark rounded ">
+            <div class="container fixed-top">
+            <ul class="nav nav-tabs  bg-dark">
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="profile.html"> 
+                        <img src="staticFile/image/{{auth_user}}" class="rounded-circle" style="box-shadow: 0.5px 0.5px;border-radius: 50%;"   width="24" height="24">
+                        Profile
+                    </a>
+                </li>
+            <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" >chat</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="setting.html">setting</a>
+            </li>
+        </ul>
+    </div>
+      <!-- Tab panes -->
+            <div class="tab-content">
+            <div class="tab-pane  fade" id="home">...</div>
+            <div class="tab-pane  active" id="chat">
+                <div class="container fixed-top" style="pointer-events: none; ">
+                    <div class="container mt-4">
+                    <div class="row">
+                        <div class="col-md-8 ">
+                            <div class="row mt-3 bg-success " style="border-radius: 5px;">
+                                <div class="col-md-1 mt-1 mb-1 offset-md-4">
+                                    <img src="staticFile/image/{{chat_user}}" class="rounded-circle"  style="box-shadow: 0.5px 0.5px;border-radius: 50%;"  width="60" height="60">
+                                </div>
+                                <div class="col-md-1 mt-1 mb-1">
+                                    <h1 style="color:rgb(247, 247, 247);">@{{user}}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="row bg-dark" style="margin:0px;height:100vh;">
+                    <!--chat room-->
+                    <div class="row"></div>
+                    <div class="col-md-8">
+                        <div class="pb-5">
+                            {{loop_user_chat_history_start}}
+                                <div class="row bg-dark" {{hidden_chat_user}}>
+                                <div class="col-md-1">
+                                    <img src="staticFile/image/{{chat_user_image}}" class="rounded-circle"  style="box-shadow: 0.5px 0.5px lightblue;border-radius: 50%;"    width="40" height="40">
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <small style="color:rgb(247, 247, 247);">{{chat_user}}</small>
+                                        </div>
+                                        <div class="col-md-3 offset-md-2">
+                                            <small style="color:rgb(247, 247, 247);">{{time}}</small>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                            <div class="bg-primary text-wrap" style="width: 30rem;border-radius: 15px;">
+                                                <h class="text-break fs-7" style=" color: white;text-shadow: 1px 1px 1px #000000;">{{message}}</h>
+                                            </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="row bg-dark" {{hidden_auth_user}}>
+                                <div class="col-md-3 offset-md-8">
+                                    <div class="row">
+                                        <div class="col-md-3 offset-md-6">
+                                            <small style="color:rgb(247, 247, 247);">{{time}}</small>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                            <div class="bg-success text-wrap" style="width: 30rem;border-radius: 15px;">
+                                                <h class="text-break fs-7" style=" color: white;text-shadow: 1px 1px 1px #000000;">{{message}}</h>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <img src="staticFile/image/{{auth_user_image}}" class="rounded-circle" style="box-shadow: 0.5px 0.5px lightblue;border-radius: 50%;"   width="40" height="40">
+                                </div>
+                                </div>
+                            {{loop_user_chat_history_end}}
+                            <div class="row bg-dark">
+                                <hr>
+                            </div>
+                            
+                        </div>
+                    </div>
+                        <div class="container fixed-bottom mt-2">
+                            <div class="container ">
+                            <div class="row bg-dark rounded">
+                                <div class="col-md-8 bg-success rounded">
+                                    
+                                    <div class="offset-md-1">
+                                        <form action="/DM" id="dm-form" method="post" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-md-7 mt-1">
+                                                    <textarea id="dm_content" style="border-radius: 10px;" name="content" cols="50" rows="3"></textarea>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-1 offset-md-6">
+                                                    <input type="submit" value="Sent">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    <!--
+                      --user list
+                     -->
+                    <div class="col-md-2 mt-3" style="position: fixed;top: 100px;right: 100px;width: 400px;">
+                        <ul class="list-group">
+                            {{loop_online_user_start}}
+                            <li class="list-group-item d-flex justify-content-between align-items-start mt-1" id="anony" style="border-radius: 10px;box-shadow: 1px 1px" onclick="select_user(this)">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="staticFile/image/{{online_user_image}}" class="rounded-circle"  style="box-shadow: 0.5px 0.5px;border-radius: 50%;"   width="60" height="60">
+                                        <div class='status-circle'>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="col-md-1">
+                                        <span class="badge bg-danger" id = {{noti_online_user}} style="width: 10px ;height: 15px;border-radius:50%;" hidden><h1 hidden></h1></span>
+                                    </div>
+                                    <div class="col-md-1 offset-md-1">
+                                        <p class="fs-5 mt-2">{{online_users}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            {{loop_online_user_end}}
+                          </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane container fade" id="setting">...</div>
+            
+        </div>
+        </div>
+    </div>
+
+
+
+
+    
+
+</body>
+</html>

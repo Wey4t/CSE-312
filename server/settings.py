@@ -9,7 +9,8 @@ def add_settings_paths(router):
     router.add_route(Route('POST', "/upload-pfp", upload_user_pfp))
 
 def upload_user_pfp(request, handler):
-    parsed_form = Form(request, ["icon","dd"])
+    parsed_form = Form(request, ["dd","icon"])
+    print(parsed_form.table)
     image_bytes = parsed_form.table["icon"]
     print("image: ", image_bytes)
     last_pfp_id = find(PFP_ID)

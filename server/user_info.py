@@ -13,7 +13,7 @@ AUTH_COOKIE = 'auth_tk'  # the name of authorized token
 def add_user_path(router):
     router.add_route(Route('POST', '/login', login_user))
     router.add_route(Route('POST', '/register', register_user))
-    router.add_route(Route('POST', '/logout', logout))
+    router.add_route(Route('GET', '/logout', logout))
     router.add_route(Route('POST','/profile_post',profile))
     router.add_route(Route('POST','/content_post',content))
 def content(request,handler):
@@ -53,6 +53,9 @@ def logout(request,handler):
         else:
             if( query['status'] == 'online'):
                 update(USER_STATUS, {'username':username},{'status': 'offline'})
+        headers = []
+        headers.append(b'Set-Cookie: %s='%AUTH_COOKIE.encode() + token.encode() + b'; HttpOnly; expires=Thu, 01 Jan 1970 00:00:00 GTM;')
+        handler.request.sendall(redirect_via_cookies('/',headers))
     else:
         handler.request.sendall(generate_response(b'Your submission was rejected','text/plain','403 Forbidden'))
 
@@ -108,7 +111,7 @@ def login_user(request, handler):
         if query is None:
             insert({'username':username,'status':'online'})
         else:
-            if( query['status'] == 'online'):
+            if( query['status'] == 'offline'):
                 update(USER_STATUS, {'username':username},{'status': 'online'})
         handler.request.sendall(redirect_via_cookies("/profile", headers))
         #handler.request.sendall(generate_response(b'Login successfully!', headers=headers))

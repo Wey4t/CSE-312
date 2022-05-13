@@ -46,7 +46,7 @@ def connectWS(request, handler):
     # opcode is either 0001(sending txt) or 1000(close connection), so first byte is either 129/136
     uniqueSession = username+"/"+str(handler)
     handler.ws_users[uniqueSession] = handler
-    print(handler.ws_users)
+    #print(handler.ws_users)
     while True:
 
         #print("-----------------------------------")

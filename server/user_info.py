@@ -96,6 +96,7 @@ def login_user(request, handler):
     query = find(USER, {'username':username})
     if query == None:
         handler.request.sendall(generate_response(b'Your submission was rejected','text/plain','403 Forbidden'))
+        return
     hashed = query['hash']
     if type(password) is not bytes:
         password = password.encode()
@@ -124,7 +125,7 @@ def check_user(request):
         return False
     if '------' in token:
         token = token.split('------')[0]
-    print(token)
+    #print(token)
     hash_token = hashlib.sha256(token.encode()).hexdigest()
     user = find(USER, {'token':hash_token})
     if user == None: #no such user

@@ -22,8 +22,8 @@ def chat_default(request,handler):
     loop_dict = construct_online_user(request,data)
     data['loop_data'] = []
     data['loop_data'].append(loop_dict)
-    print(data)
-    print(handler.ws_users)
+    #print(data)
+    #print(handler.ws_users)
     view = make_template(CHAT_TEMPLATE_DEFAULT_PATH,data)
     handler.request.sendall(generate_response(view.encode('utf-8'),'text/html; charset=utf-8'))
     
@@ -40,7 +40,7 @@ def construct_online_user(request,data):
     sender_dict = {}
     loop_online_user = []
     unread_messages = find_all(MESSAGE, {'receiver':auth_name,'message_status':'unread'})
-    print('unreads',unread_messages)
+    #print('unreads',unread_messages)
     if unread_messages is not None:
         for unread_message in unread_messages:
             sender_dict[unread_message['sender']] = '1'
@@ -49,7 +49,7 @@ def construct_online_user(request,data):
             users.append(user['username'])
     if data.get('auth_user_image') == None:
         data['auth_user_image']=user_profile['profile_image']
-    print('test',sender_dict)
+    #print('test',sender_dict)
     for key in users:
         if key is bytes:
             key = key.decode()
@@ -57,7 +57,7 @@ def construct_online_user(request,data):
         hidden_noti = 'hidden'
         if(sender_dict.get(key) is not None and sender_dict[key] == '1'):
             hidden_noti = ''
-            print(key,hidden_noti)
+            #print(key,hidden_noti)
         user_data = {
                    'online_user_image': user_query['profile_image'],
                    'noti_online_user' : hidden_noti,
@@ -118,7 +118,7 @@ def construct_template_data(request):
     auth_message =''
     loop_data =[]
     for message in messages:
-        print(message['receiver'])
+        #(message['receiver'])
         if auth_name != message['sender']:
             hidden = ''
             auth_hidden = 'hidden'
@@ -150,7 +150,7 @@ def construct_template_data(request):
         }
     dict['loop_data'].append(loop_dict)
     dict['loop_data'].append(construct_online_user(request,dict))
-    print(dict)
+    #print(dict)
     return dict
 
 if __name__ =="__main__":
@@ -177,6 +177,6 @@ if __name__ =="__main__":
     while j<M:
         message2.append(messages2[j])
         j+=1
-    print("1",message1)
-    print("2",message2)
+    #print("1",message1)
+    #print("2",message2)
 	

@@ -15,11 +15,22 @@ def add_user_path(router):
     router.add_route(Route('POST', '/register', register_user))
     router.add_route(Route('POST', '/logout', logout))
     router.add_route(Route('POST','/profile_post',profile))
-
-def profile(request,handler):
-    names= ['post','profile']
+    router.add_route(Route('POST','/content_post',content))
+def content(request,handler):
+    names= ['content']
     form_data = Form(request,names).table
-    print(form_data)
+    for key in form_data:
+        form_data[key] =  form_data[key].decode()
+    token = request.cookies[AUTH_COOKIE]
+    hash_token = hashlib.sha256(token.encode()).hexdigest()
+    user_info = find(USER, {'token':hash_token})
+    auth_name = user_info['username']
+    update(PROFILE,{'username':auth_name},{'post':form_data['content']})
+
+    handler.request.sendall(redirect('/'))
+def profile(request,handler):
+    names= ['profile']
+    form_data = Form(request,names).table
     for key in form_data:
         form_data[key] =  form_data[key].decode()
     token = request.cookies[AUTH_COOKIE]
@@ -27,7 +38,6 @@ def profile(request,handler):
     user_info = find(USER, {'token':hash_token})
     auth_name = user_info['username']
     update(PROFILE,{'username':auth_name},form_data)
-    update(PROFILE,{'username':auth_name},{'profile':''})
 
     handler.request.sendall(redirect('/'))
 

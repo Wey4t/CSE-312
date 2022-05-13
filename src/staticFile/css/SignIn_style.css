@@ -29,7 +29,7 @@
 
     position: absolute;
     width: 397px;
-    height: 394px;
+    height: 450px;
     left: 39%;
     top: 276px;
 
@@ -40,6 +40,14 @@
     box-sizing: border-box;
     border-radius: 16px;
 }
+.Login2{
+    position: static;
+    font-family: Inter;
+    font-style: normal;
+    font-size: 23px;
+  
+  }
+  
 
 .textModule{
     display: flex;

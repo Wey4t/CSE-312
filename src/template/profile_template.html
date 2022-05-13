@@ -77,18 +77,24 @@
                 </div>
                 <div class="row">
                     <div class="offset-md-1">
-                        <p class="fs-5">{{Personal_profile}}</p>
-                    </div><hr>
+                        <p class="fs-5" onclick="show_profile_input()" id="profile_content">{{Personal_profile}}</p>
+                    </div>
+                    <form action="/profile_post" method="post" id="profile_form" enctype="multipart/form-data" hidden>
+                        <label for="profile"><b>Description</b></label>
+                        <input type="text" placeholder="Enter Description" name="profile" required>
+                        <input type="submit"value="Submit">
+                    </form>
+                    <hr>
                 </div>
                 <div class="row">
                         <div class="offset-md-1">
-                            <p class="fs-5">{{content}}</p>
+                            <p class="fs-5" onclick="show_content_input()" id="profile_content">{{content}}</p>
                         </div>
-                        <form action="/profile_post" method="post" enctype="multipart/form-data">
-                            <label for="Authenticated Chat"><b>Description</b></label>
-                            <input type="text" placeholder="Enter Description" name="post" required>
+                        <form action="/content_post" method="post" id="content_form" enctype="multipart/form-data" hidden>
+                            <label for="content"><b>Description</b></label>
+                            <input type="text" placeholder="Enter Description" name="content" required>
                             <input type="submit"value="Submit">
-                          </form>
+                        </form>
                     </div>
                 </div>
             </div>

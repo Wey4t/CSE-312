@@ -11,3 +11,10 @@ def redirect(path):
     response = ('HTTP/1.1 302 Redirect\r\nContent-Length: 0\r\nLocation: %s\r\n\r\n' % path).encode()
     return response
 
+def redirect_via_cookies(path, cookies):
+    data = b''
+    for i in cookies:
+        data += i
+    response = ('HTTP/1.1 302 Redirect\r\nContent-Length: 0\r\nLocation: %s\r\n' % path).encode() + data + b'\r\n\r\n'
+    return response
+

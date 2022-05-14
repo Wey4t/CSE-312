@@ -1,22 +1,18 @@
 
 
 .signUp_Container{
-  /* container */
-  /* Auto layout */
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 48px 40px;
 
   position: absolute;
-  width: 380px;
-  height: 400px;
-  left: 40%;
+  width: 397px;
+  height: 450px;
+  left: 39%;
   top: 28%;
 
   background: #FFFFFF;
-  /* Grey / T4 */
 
   border: 2px solid #ECECEC;
   box-sizing: border-box;

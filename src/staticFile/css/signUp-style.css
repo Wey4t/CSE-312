@@ -35,43 +35,35 @@
 
 #signUp_button{
 
-  /* Button / Primary / Default */
   position: absolute;
   width: 300px;
   height: 48px;
   left: 10.5%;
   top: 65%;
 
-  /* Inside auto layout */
   flex: none;
   order: 0;
   align-self: stretch;
   flex-grow: 0;
   margin: 16px 0px;
 
-  /* background */
   background: rgba(49, 94, 255, 0.45);
   border-radius: 24px;
   border:none;
 
-  /* Next */
   font-family: Inter;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
-  /* identical to box height, or 125% */
   vertical-align: middle;
   text-align: center;
 
-  /* White */
   color: #FFFFFF;
 }
 
 
 .divALLINPUT {
-  /* input-module */
-  /* Auto layout */
 
   display: flex;
   flex-direction: column;
@@ -84,9 +76,6 @@
   left: 40px;
   top: 124px;
 
-
-  /* Inside auto layout */
-
   flex: none;
   order: 1;
   align-self: stretch;
@@ -94,7 +83,6 @@
   margin: 10px 0px;}
 
 .divUserInput{
-  /* Auto layout */
 
   display: flex;
   flex-direction: column;
@@ -106,9 +94,6 @@
   height: 64px;
   left: 0px;
   top: 0px;
-
-
-  /* Inside auto layout */
 
   flex: none;
   order: 0;
@@ -131,8 +116,6 @@
   margin: 5px 0px;
 }
 .username_input{
-  /* input */
-
   position: static;
   width: 300px;
   height: 40px;
@@ -140,7 +123,6 @@
   top: 24px;
 
   padding-left:13%;
-  /* Inside auto layout */
   border: 1px solid #D8D8D8;
   box-sizing: border-box;
   border-radius: 24px;
@@ -153,70 +135,6 @@
 
 }
 
-.divEmailInput{
-  /* Auto layout */
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0px;
-
-  position: static;
-  width: 300px;
-  height: 64px;
-  left: 0px;
-  top: 88px;
-
-
-  /* Inside auto layout */
-
-  flex: none;
-  order: 1;
-  align-self: stretch;
-  flex-grow: 0;
-  margin: 12px 0px;
-}
-
-.Lable_Email {
-  /* Email */
-
-
-  position: static;
-  width: 57px;
-  height:16px;
-  left: 0px;
-  top: 0px;
-
-  /* Body 2 */
-
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
-  /* identical to box height, or 133% */
-  /* Black */
-  color: #212429;
-}
-.EmailInput {
-  position: static;
-  width: 300px;
-  height: 40px;
-  left: 0px;
-  top: 24px;
-  border: 1px solid #D8D8D8;
-  box-sizing: border-box;
-  border-radius: 24px;
-
-  /* Inside auto layout */
-  padding-left:68%;
-  flex: none;
-  order: 1;
-  align-self: stretch;
-  flex-grow: 0;
-  margin: 8px 0px;
-  font-size:15px;
-}
 
 .divPasswordInput{
   /* Auto layout */
@@ -233,8 +151,6 @@
   top: 88px;
 
 
-  /* Inside auto layout */
-
   flex: none;
   order: 2;
   align-self: stretch;
@@ -243,8 +159,6 @@
 }
 
 .Lable_Password {
-  /* Password */
-
 
   position: static;
   width: 57px;
@@ -252,15 +166,11 @@
   left: 0px;
   top: 0px;
 
-  /* Body 2 */
-
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
-  /* identical to box height, or 133% */
-  /* Black */
   color: #212429;
 }
 .PasswordInput {
@@ -283,64 +193,6 @@
   font-size:15px;
 }
 
-.divComPasswordInput{
-  /* Auto layout */
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0px;
-
-  position: static;
-  width: 300px;
-  height: 64px;
-  left: 0px;
-  top: 0px;
-
-
-  /* Inside auto layout */
-
-  flex: none;
-  order: 3;
-  align-self: stretch;
-  flex-grow: 0;
-  margin: 7px 0px;
-}
-
-.Lable_ComPassword{
-  position: static;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
-  color: #212429;
-  flex: none;
-  order: 3;
-  flex-grow: 0;
-  margin: 8px 0px;
-}
-.ComPasswordInput{
-  /* input */
-
-  position: static;
-  width: 300px;
-  height: 40px;
-  left: 0px;
-  top: 24px;
-
-  padding-left:13%;
-  /* Inside auto layout */
-  border: 1px solid #D8D8D8;
-  box-sizing: border-box;
-  border-radius: 24px;
-  flex: none;
-  order: 3;
-  align-self: stretch;
-  flex-grow: 0;
-  margin: 8px 0px;
-  font-size:15px;
-}
 
 .button_back{
   position: absolute;

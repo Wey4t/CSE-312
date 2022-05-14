@@ -1,13 +1,24 @@
-import pymongo
-client = pymongo.MongoClient(port=27017)
+#import pymongo
+from pymongo import MongoClient
+import json
+USER = "user_identity"
+MESSAGE = "message_history"
+PROFILE = "user_profile"
+USER_STATUS = "user_status"
+PFP_ID = "pfp_id"
+#client = pymongo.MongoClient(port=27017)
+client = MongoClient("mongo")
 db=client["web_project"]
 collection_map = {}
 def add_table(table_name, key):
     coll = db[table_name]
     key = tuple(sorted(key.keys()))
     collection_map[key]=coll
-add_table("user_identity", {'username':'','email':'','shadow':''})
-add_table("comment_space", {'username':'','comment':'','image':''})
+add_table(USER_STATUS, {'username':'','status':''})
+add_table(USER, {'username':'','hash':'','token':'','salt':''})
+add_table(MESSAGE, {'sender':'','receiver':'','message':'','message_status':''})
+add_table(PROFILE, {'username':'','post':'','profile':'','profile_image':''})
+add_table(PFP_ID, {"last_pfp_id": -1})
 def nothing(x):
     pass
 
@@ -17,12 +28,12 @@ def insert(insert_dict):
 
 def find(collection_name,query = {},func = nothing):
     collection = db[collection_name]
-    all = collection.find(query,{"_id": 0})
-    result = []
-    for x in all:
-        func(x)
-        result.append(x)
-    return result
+    all = collection.find_one(query)
+    return all
+def find_all(collection_name,query = {},func = nothing):
+    collection = db[collection_name]
+    all = collection.find(query)
+    return list(all)
 
 def delete(collection_name,query,many = False):
     collection = db[collection_name]
@@ -40,27 +51,3 @@ def update(collection_name,query,value,many = False):
         collection.update_one(query, newvalues)
     
 # test
-if __name__ == "__main__":
-    test_case_1 = {'username':'Tom','email':'Tom@gmail.com','shadow':'ASdzfgz='}
-    test_case_2 = {'username':'Jay','comment':'this is dog','image':'dog.jpg'}
-    test_case_3 = {'username':'Zoe','comment':'this is cat','image':'cat.jpg'}
-    #insert(test_case_1)
-    #print(find('user_identity',{'username':'Tom'}))
-    insert(test_case_2)
-    print('before delete',find('comment_space',{'image':'dog.jpg'}))
-    delete('comment_space',{'image':'dog.jpg'})
-    print('after delete',find('comment_space',{'image':'dog.jpg'}))
-    for x in range(1,10):
-        test_case_3 = {'username':'Zoe','comment':'this is cat','image':'cat.jpg'} # insert will change test_case_3
-        insert(test_case_3)
-    print('before delete',find('comment_space',{'image':'cat.jpg'}))
-    delete('comment_space',{'image':'cat.jpg'},True)
-    print('after delete',find('comment_space',{'image':'cat.jpg'}))
-    for x in range(1,10):
-        test_case_3 = {'username':'Zoe','comment':'this is cat','image':'cat.jpg'} # insert will change test_case_3
-        insert(test_case_3)
-    print('before update one',find('comment_space',{'image':'cat.jpg'}))
-    update('comment_space',{'image':'cat.jpg'},{'image':'dog.jpg'})
-    print('after update one',find('comment_space'))
-    update('comment_space',{'image':'cat.jpg'},{'image':'dog.jpg'},True)
-    print('after update many',find('comment_space'))

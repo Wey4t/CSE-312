@@ -1,26 +1,6 @@
 
 
 
-.resetpassword{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 48px 40px;
-
-    position: absolute;
-    width: 380px;
-    height: 520px;
-    left: 70%;
-    top: 13%;
-
-    background: #FFFFFF;
-    /* Grey / T4 */
-
-    border: 2px solid #ECECEC;
-    box-sizing: border-box;
-    border-radius: 16px;
-}
-
 .signIn_Container {
     display: flex;
     flex-direction: column;
@@ -29,70 +9,38 @@
 
     position: absolute;
     width: 397px;
-    height: 394px;
-    left: 485px;
-    top: 276px;
+    height: 450px;
+    left: 39%;
+    top: 28%;
 
     background: #FFFFFF;
-    /* Grey / T4 */
 
     border: 2px solid #ECECEC;
     box-sizing: border-box;
     border-radius: 16px;
 }
-
-.textModule{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0;
-
+.Login2{
     position: static;
-    width: 300px;
-    height: 36px;
-    left: 40px;
-    top: 48px;
+    font-family: Inter;
+    font-style: normal;
+    font-size: 23px;
+  
+  }
+  
 
 
-    /* Inside auto layout */
-
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
-    margin: 40px 0;
-}
-
-
-
-.label_email_or_username{
+.label_username{
     position: static;
-    width: 120px;
-    height: 16px;
-    left: 0px;
-    top: 0px;
-    
-    /* Body 2 */
-    
-    font-family: 'Inter';
+    font-family: Inter;
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
     line-height: 16px;
-    /* identical to box height, or 133% */
-    
-    
-    /* Black */
-    
     color: #212429;
-    
-    
-    /* Inside auto layout */
-    
     flex: none;
     order: 0;
     flex-grow: 0;
-    margin: 8px 0px;
+    margin: 5px 0px;
 }
 
 .username_input{
@@ -189,27 +137,7 @@
     color: #FFFFFF;
 }
 
-.divInput{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0px;
 
-    position: static;
-    width: 300px;
-    height: 152px;
-    left: 40px;
-    top: 124px;
-
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 0;
-    margin: 40px 0px;
-}
 .divALLINPUT {
     /* input-module */
     /* Auto layout */
@@ -302,7 +230,6 @@
 }
 
 .Label_Link_CreateAccount{
-    /* Create Account → */
 
     white-space:nowrap;
     position: static;
@@ -311,65 +238,23 @@
     left: calc(50% - 105px/2 - 97.5px);
     top: calc(50% - 16px/2 + 16px);
 
-    /* Body 2 */
-
     font-family: Inter;
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
     line-height: 16px;
-    /* identical to box height, or 133% */
 
     display: flex;
     align-items: center;
     text-align: center;
 
-    /* Black */
 
     color: #212429;
-
-
-    /* Inside auto layout */
 
     flex: none;
     order:0;
     flex-grow: 0;
     margin: 16px 0px;
-}
-
-.LableLink_ForgetPassword {
-    /* Forgot password? */
-
-    white-space:nowrap;
-    position: static;
-    width: 105px;
-    height: 16px;
-    left: calc(50% - 105px/2);
-    top: calc(50% - 16px/2);
-
-    font-family: Inter;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 16px;
-    /* identical to box height, or 133% */
-
-    display: flex;
-    align-items: center;
-    text-align: center;
-
-    /* Grey / T2 */
-
-    color: #98989E;
-
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-    margin: 8px 0px;
-
 }
 
 

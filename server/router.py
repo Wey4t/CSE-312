@@ -1,14 +1,17 @@
 import re
+from response import generate_response
+def add_route(route):
+    Router.routes.append(route)
 class Router:
-    def __init__(self):
-        self.routes = []
+    routes = []
     def add_route(self,route):
-        self.routes.append(route)
+        Router.routes.append(route)
     def handle_request(self, request, handler):
         for route in self.routes:
             if route.is_request_match(request):
                 route.handle_request(request, handler)
                 return
+        handler.request.sendall(generate_response(b'content was not found','text/plain','404 Not Found'))
         # return 404
 
 
@@ -19,19 +22,7 @@ class Route:
         self.path = path
         self.action = action
     def is_request_match(self, request):
-        return request.method == self.method and re.search('^'+self.path,request.path)
+        return request.method == self.method and re.search(self.path,request.path)
     def handle_request(self,request, handler):
         self.action(request,handler)
-
-if __name__ == "__main__":
-    class Request:
-        def __init__(self,method,path):
-            self.method = method
-            self.path = path
-    def test_func(request,handler):
-        print('t21312est')
-    Router.add_route(Route('GET','/hello',test_func))
-
-    r = Router()
-    request = Request('GET','/hello')
-    r.handle_request(request,'')
+    

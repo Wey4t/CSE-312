@@ -8,6 +8,7 @@ from user_info import add_user_path
 from user_profile import add_profile_path
 from user_chat import add_chat_path
 from settings import add_settings_paths
+from draw_broad import add_drawboard_path
 import websocket
 import sys
 class MyTCPHandler(socketserver.BaseRequestHandler):
@@ -22,6 +23,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     ws_users = {} # store username:handler object to identity the ws connections
 
     router = Router()
+    add_drawboard_path(router)
     add_settings_paths(router)
     add_dm_path(router)
     add_chat_path(router)
@@ -34,9 +36,9 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         self.data = self.request.recv(4*1024).strip()
         if len(self.data) == 0:
             return 
-        print("{} wrote:".format(self.client_address[0]))
-        
         request = Request(self.data, self)
+        print("{} wrote:request {}".format(self.client_address[0], request.path))
+        
         self.router.handle_request(request, self)
         sys.stdout.flush()
         sys.stderr.flush()

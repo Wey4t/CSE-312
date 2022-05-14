@@ -15,7 +15,7 @@ def add_profile_path(router):
 def profile(request, handler):
     if check_user(request):
         data:dict = construct_template_data(request)
-        #print(os.getcwd())
+        ##print(os.getcwd())
         view = make_template(PROFILE_TEMPLATE_PATH,data)
         handler.request.sendall(generate_response(view.encode('utf-8'),'text/html; charset=utf-8'))
     else:
@@ -23,9 +23,9 @@ def profile(request, handler):
 
 def construct_template_data(request):
     token = request.cookies[AUTH_COOKIE]
-    print(token)
+    #print(token)
     hash_token = hashlib.sha256(token.encode()).hexdigest()
-    print('hashtoken:',hash_token)
+    #print('hashtoken:',hash_token)
     user_info = find(USER, {'token':hash_token})
     user_profile = find(PROFILE, {'username':user_info['username']})
     dict = {
@@ -40,6 +40,6 @@ def construct_template_data(request):
     return dict
 
 if __name__ == "__main__":
-    print(os.getcwd())
+    #print(os.getcwd())
     fp = open('src/template/profile_template.html','rb')
-    print(fp.read())
+    #print(fp.read())

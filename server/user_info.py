@@ -6,13 +6,14 @@ from router import add_route, Route
 from database import *
 from response import generate_response, redirect
 from form import Form
+from response import redirect_via_cookies
 TOKEN_LEN = 80
 AUTH_COOKIE = 'auth_tk'  # the name of authorized token
 
 def add_user_path(router):
     router.add_route(Route('POST', '/login', login_user))
     router.add_route(Route('POST', '/register', register_user))
-    router.add_route(Route('POST', '/logout', logout))
+    router.add_route(Route('GET', '/logout', logout))
     router.add_route(Route('POST','/profile_post',profile))
     router.add_route(Route('POST','/content_post',content))
 def content(request,handler):
@@ -52,6 +53,9 @@ def logout(request,handler):
         else:
             if( query['status'] == 'online'):
                 update(USER_STATUS, {'username':username},{'status': 'offline'})
+        headers = []
+        headers.append(b'Set-Cookie: %s='%AUTH_COOKIE.encode() + token.encode() + b'; HttpOnly; expires=Thu, 01 Jan 1970 00:00:00 GTM;')
+        handler.request.sendall(redirect_via_cookies('/',headers))
     else:
         handler.request.sendall(generate_response(b'Your submission was rejected','text/plain','403 Forbidden'))
 
@@ -92,6 +96,7 @@ def login_user(request, handler):
     query = find(USER, {'username':username})
     if query == None:
         handler.request.sendall(generate_response(b'Your submission was rejected','text/plain','403 Forbidden'))
+        return
     hashed = query['hash']
     if type(password) is not bytes:
         password = password.encode()
@@ -107,9 +112,10 @@ def login_user(request, handler):
         if query is None:
             insert({'username':username,'status':'online'})
         else:
-            if( query['status'] == 'online'):
+            if( query['status'] == 'offline'):
                 update(USER_STATUS, {'username':username},{'status': 'online'})
-        handler.request.sendall(generate_response(b'You login',headers=headers))
+        handler.request.sendall(redirect_via_cookies("/profile", headers))
+        #handler.request.sendall(generate_response(b'Login successfully!', headers=headers))
     else:
         handler.request.sendall(generate_response(b'Your submission was rejected','text/plain','403 Forbidden'))
 
@@ -119,7 +125,7 @@ def check_user(request):
         return False
     if '------' in token:
         token = token.split('------')[0]
-    print(token)
+    #print(token)
     hash_token = hashlib.sha256(token.encode()).hexdigest()
     user = find(USER, {'token':hash_token})
     if user == None: #no such user

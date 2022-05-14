@@ -29,7 +29,7 @@
 
     position: absolute;
     width: 397px;
-    height: 394px;
+    height: 450px;
     left: 39%;
     top: 276px;
 
@@ -40,6 +40,14 @@
     box-sizing: border-box;
     border-radius: 16px;
 }
+.Login2{
+    position: static;
+    font-family: Inter;
+    font-style: normal;
+    font-size: 23px;
+  
+  }
+  
 
 .textModule{
     display: flex;
@@ -67,32 +75,16 @@
 
 .label_email_or_username{
     position: static;
-    width: 120px;
-    height: 16px;
-    left: 0px;
-    top: 0px;
-    
-    /* Body 2 */
-    
-    font-family: 'Inter';
+    font-family: Inter;
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
     line-height: 16px;
-    /* identical to box height, or 133% */
-    
-    
-    /* Black */
-    
     color: #212429;
-    
-    
-    /* Inside auto layout */
-    
     flex: none;
     order: 0;
     flex-grow: 0;
-    margin: 8px 0px;
+    margin: 5px 0px;
 }
 
 .username_input{

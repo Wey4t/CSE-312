@@ -11,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/src/staticFile/js/script.js"> </script>
     <script src="/src/staticFile/js/chat.js"> </script>
+    <script src="/src/staticFile/js/ws.js"></script>
     <meta charset="utf-8">
     <title>CSE312 Project</title>
 </head>
@@ -31,10 +32,10 @@
             <a class="nav-link active" data-bs-toggle="tab" >chat</a>
                 </li>
                 <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="/setting">setting</a>
+            <a class="nav-link" data-bs-toggle="tab" href="/setting" hidden>setting</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="/src/template/draw_borad_template.html">Draw borad</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="/drawboard">Draw board</a>
                 </li>
         </ul>
     </div>
@@ -65,7 +66,7 @@
                                     </div>
                             
                                     <div class="col-md-1">
-                                        <span class="badge bg-danger"  style="width: 10px ;height: 15px;border-radius:50%;" {{noti_online_user}}><h1 hidden></h1></span>
+                                        <span class="badge bg-danger"  id={{noti_id}} style="width: 10px ;height: 15px;border-radius:50%;" {{noti_online_user}}><h1 hidden></h1></span>
                                     </div>
                                     <div class="col-md-1 offset-md-1">
                                         <p class="fs-5 mt-2">{{online_users}}</p>
